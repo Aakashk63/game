@@ -12,6 +12,7 @@
             --text-parchment: #e0d7c6;
             --panel-bg: rgba(20, 20, 20, 0.95);
             --border-style: 2px solid var(--accent-gold);
+            --border-subtle: 1px solid #333;
         }
 
         * {
@@ -31,16 +32,18 @@
         }
 
         /* Typography */
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--accent-gold);
             text-align: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 860px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -48,17 +51,53 @@
         /* Navigation / Header */
         header {
             border-bottom: var(--border-style);
-            padding: 1rem;
+            padding: 0.8rem 1rem;
             background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
             position: sticky;
             top: 0;
             z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 1.35rem;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            text-align: left;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background: #1a1a1a;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+            font-family: 'Georgia', serif;
+        }
+
+        .icon-btn:hover {
+            background: var(--accent-burgundy);
+            color: #fff;
         }
 
         /* Screens */
         .screen {
             display: none;
-            animation: fadeIn 0.5s ease-in-out;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
         .screen.active {
@@ -66,7 +105,7 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -78,198 +117,654 @@
             margin-bottom: 20px;
             border-radius: 4px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .card-gold {
+            border: 1px solid var(--accent-gold);
         }
 
         /* Buttons */
         .btn {
             display: block;
             width: 100%;
-            padding: 15px;
+            padding: 14px;
             background-color: var(--accent-burgundy);
             color: var(--text-parchment);
             border: 1px solid var(--accent-gold);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             text-transform: uppercase;
+            letter-spacing: 1px;
             transition: all 0.3s;
             margin: 10px 0;
             text-align: center;
             text-decoration: none;
+            font-family: 'Georgia', serif;
         }
 
         .btn:hover {
             background-color: #630606;
-            box-shadow: 0 0 10px var(--accent-gold);
+            box-shadow: 0 0 12px var(--accent-gold);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
         }
 
         .btn-secondary {
             background-color: #222;
+            border-color: #555;
+        }
+
+        .btn-secondary:hover {
+            background-color: #333;
+            border-color: var(--accent-gold);
+        }
+
+        .btn-small {
+            display: inline-block;
+            width: auto;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            margin: 4px;
+        }
+
+        .btn-gold {
+            background-color: var(--accent-gold);
+            color: #0a0a0a;
+            font-weight: bold;
+        }
+
+        .btn-gold:hover {
+            background-color: #dfb96c;
+            color: #000;
+        }
+
+        .btn-danger {
+            background-color: #5c0f0f;
+            border-color: #ff4d4d;
+            color: #ffcccc;
         }
 
         /* Form Inputs */
-        input[type="text"], input[type="password"], textarea {
+        input[type="text"], input[type="password"], input[type="number"], select, textarea {
             width: 100%;
             padding: 12px;
-            margin: 10px 0;
-            background: #1a1a1a;
+            margin: 8px 0;
+            background: #151515;
             border: 1px solid #444;
             color: var(--text-parchment);
             font-size: 1rem;
+            font-family: 'Georgia', serif;
+            border-radius: 2px;
         }
 
-        input:focus {
+        input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--accent-gold);
+            background: #1c1c1c;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-top: 8px;
         }
 
         /* Game UI Components */
         .timer-bar {
             background: #000;
-            color: #ff3333;
+            color: #ff4444;
             font-family: 'Courier New', monospace;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            font-weight: bold;
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #333;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
+        }
+
+        .timer-warning {
+            color: #ff2222;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { opacity: 0.8; }
+            to { opacity: 1; transform: scale(1.01); }
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 10px;
             margin-bottom: 20px;
         }
 
         .stat-box {
-            background: #1a1a1a;
-            padding: 10px;
+            background: #161616;
+            padding: 12px;
             border: 1px solid #333;
             text-align: center;
+            border-radius: 3px;
         }
 
-        .clue-image {
+        .stat-label {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 1.35rem;
+            color: var(--accent-gold);
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .clue-visual-panel {
             width: 100%;
-            height: 200px;
-            background: #1a1a1a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            min-height: 200px;
+            background: linear-gradient(135deg, #181212 0%, #0d0d0d 100%);
             border: 1px dashed var(--accent-gold);
-            object-fit: cover;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            position: relative;
         }
 
+        .clue-type-badge {
+            display: inline-block;
+            background: var(--accent-burgundy);
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 3px 10px;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .artifact-preview {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #443;
+            padding: 15px;
+            color: #e5cf9c;
+            line-height: 1.5;
+            font-size: 0.95rem;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        /* Stepper */
         .progress-stepper {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .progress-stepper::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: #252525;
+            z-index: 1;
+            transform: translateY(-50%);
         }
 
         .step {
-            width: 30px;
-            height: 30px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            background: #333;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            color: #888;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .step.complete { background: var(--accent-burgundy); }
-        .step.active { border: 2px solid var(--accent-gold); }
+        .step.complete {
+            background: var(--accent-burgundy);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .container { padding: 15px; }
-            h1 { font-size: 1.5rem; }
+        .step.active {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 10px var(--accent-gold);
+            color: #fff;
+            transform: scale(1.15);
+            background: #2b0808;
+        }
+
+        /* Alert Banners */
+        .banner {
+            padding: 12px 16px;
+            margin: 12px 0;
+            border-radius: 3px;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .banner-danger {
+            background: #330808;
+            border: 1px solid #a82222;
+            color: #ffbaba;
+        }
+
+        .banner-success {
+            background: #082911;
+            border: 1px solid #238b3b;
+            color: #bbf2c8;
+        }
+
+        .banner-info {
+            background: #141f2b;
+            border: 1px solid #32628d;
+            color: #b9dcff;
+        }
+
+        /* Mansion Map */
+        .mansion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .room-card {
+            background: #141414;
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .room-card:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-2px);
+        }
+
+        .room-card.unlocked {
+            border-color: var(--accent-gold);
+            background: #1c1515;
+        }
+
+        .room-card.current {
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 12px rgba(197, 160, 89, 0.35);
+        }
+
+        .room-card.locked {
+            opacity: 0.55;
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+
+        .room-status {
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 8px;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--panel-bg);
+            border: 2px solid var(--accent-gold);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 24px;
+            border-radius: 4px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9);
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            margin: 10px 0;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #292929;
+            text-align: left;
+        }
+
+        th {
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            background: #111;
+        }
+
+        /* Suspect Cards */
+        .suspect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .suspect-card {
+            background: #161616;
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .suspect-card:hover, .suspect-card.selected {
+            border-color: var(--accent-gold);
+            background: #241414;
+        }
+
+        .suspect-card.selected {
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .suspect-name {
+            font-weight: bold;
+            color: var(--accent-gold);
+            font-size: 0.95rem;
+        }
+
+        .suspect-role {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-top: 4px;
         }
 
         /* Utilities */
         .overflow-x-auto { overflow-x: auto; width: 100%; }
         .text-center { text-align: center; }
         .accent-text { color: var(--accent-gold); }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .tab-btn-group { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .container { padding: 12px; }
+            h1 { font-size: 1.3rem; }
+            .header-title { font-size: 1.1rem; }
+            .timer-bar { font-size: 1.35rem; }
+            .progress-stepper { padding: 0; }
+            .step { width: 28px; height: 28px; font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>THE LAST SECRET</h1>
+        <div class="header-title">THE LAST SECRET</div>
+        <div class="header-controls">
+            <button class="icon-btn" onclick="toggleAudio()" id="audio-toggle-btn" title="Toggle Gothic Audio Atmosphere">🔊 Sound: Off</button>
+            <button class="icon-btn" onclick="openEvidenceModal()" id="btn-evidence-dossier" style="display:none;">📂 Evidence Dossier</button>
+            <button class="icon-btn" onclick="showScreen('screen-mansion-map')" id="btn-map-shortcut" style="display:none;">🗺️ Map</button>
+            <button class="icon-btn" onclick="handleExitOrReset()">🏠 Menu</button>
+        </div>
     </header>
 
     <div class="container">
+
+        <!-- Banner for In-game notifications -->
+        <div id="game-banner" class="banner"></div>
         
         <!-- Welcome / Selection Screen -->
         <section id="screen-welcome" class="screen active">
-            <div class="card">
+            <div class="card card-gold">
                 <h2>Blackwood Mansion</h2>
-                <p>A tragedy occurred 20 years ago. The truth is still buried in these halls. Are you ready to uncover the secret?</p>
-                <button class="btn" onclick="showScreen('screen-student-reg')">Join Investigation</button>
-                <button class="btn btn-secondary" onclick="showScreen('screen-admin-login')">Facilitator Access</button>
+                <h3 style="color: #bbb; font-size: 1rem; margin-bottom: 1rem;">Haunted Murder Mystery Treasure Hunt</h3>
+                <p>Twenty years ago on a tempestuous November evening, Lord Edward Blackwood was murdered in his private study. The police found locked doors, coded telegrams, and five suspects with secrets to hide. The killer was never brought to justice.</p>
+                <p>You and your fellow detectives are invited to explore the mansion grounds, solve all 7 sequence puzzles, uncover the hidden alibis, and declare the truth before the final hourglass runs out.</p>
+                
+                <div style="margin: 20px 0;">
+                    <button class="btn" onclick="showScreen('screen-student-reg')">Join as Detective Team</button>
+                    <button class="btn btn-secondary" onclick="showScreen('screen-admin-login')">Facilitator / Admin Control</button>
+                    <button class="btn btn-secondary" style="font-size: 0.85rem;" onclick="openStoryLoreModal()">📜 Read Full Case File & Suspects</button>
+                </div>
+            </div>
+
+            <div class="card text-center" style="font-size: 0.85rem; color: #888;">
+                <p>Designed for college icebreaker investigations • 4-5 Detectives per team • 100 Points Total</p>
+                <p>Access Code: <strong style="color: var(--accent-gold);">BW-1888</strong> | Admin Passcode: <strong style="color: var(--accent-gold);">blackwood1888</strong></p>
             </div>
         </section>
 
         <!-- Admin Login -->
         <section id="screen-admin-login" class="screen">
             <div class="card">
-                <h2>Admin Login</h2>
-                <input type="text" placeholder="Username" id="admin-user">
-                <input type="password" placeholder="Passcode" id="admin-pass">
-                <button class="btn" onclick="adminLogin()">Login</button>
-                <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">Back</button>
+                <h2>Facilitator Login</h2>
+                <p style="text-align: center; color: #888; font-size: 0.9rem;">Game Master portal to control timer, teams, hints, and scoring.</p>
+                <label>Username</label>
+                <input type="text" placeholder="admin" id="admin-user" value="admin">
+                <label>Passcode</label>
+                <input type="password" placeholder="Passcode (default: blackwood1888)" id="admin-pass" value="blackwood1888">
+                <button class="btn" onclick="adminLogin()">Enter Command Center</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">Back to Hall</button>
             </div>
         </section>
 
         <!-- Admin Dashboard -->
         <section id="screen-admin-dashboard" class="screen">
-            <h2>Facilitator Control</h2>
-            <div class="stats-grid">
-                <div class="stat-box">Teams: <span id="admin-team-count">4</span></div>
-                <div class="stat-box">Time: <span id="admin-timer">45:00</span></div>
+            <div class="flex-between">
+                <h2>Facilitator Control Center</h2>
+                <button class="btn-small btn-secondary" onclick="showScreen('screen-welcome')">Logout</button>
             </div>
-            <div class="card">
-                <h3>Active Teams</h3>
-                <div class="overflow-x-auto">
-                    <table>
-                        <thead>
-                            <tr><th>Team</th><th>Progress</th><th>Score</th><th>Action</th></tr>
-                        </thead>
-                        <tbody id="team-list">
-                            <tr><td>Shadow Squad</td><td>4/7</td><td>45</td><td><button>Hint</button></td></tr>
-                            <tr><td>The Sleuths</td><td>2/7</td><td>20</td><td><button>Hint</button></td></tr>
-                        </tbody>
-                    </table>
+
+            <!-- Master Timer Controls -->
+            <div class="card card-gold">
+                <div class="flex-between" style="flex-wrap: wrap;">
+                    <div>
+                        <span class="stat-label">Master Game Status:</span>
+                        <strong id="admin-game-status" style="color: var(--accent-gold); font-size: 1.1rem; margin-left: 6px;">Active</strong>
+                    </div>
+                    <div>
+                        <span class="stat-label">Clock:</span>
+                        <span id="admin-master-clock" style="font-family: 'Courier New', monospace; font-size: 1.4rem; color: #ff4444; font-weight: bold; margin-left: 6px;">60:00</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap;">
+                    <button class="btn-small btn-gold" onclick="adminToggleTimer()" id="admin-timer-toggle-btn">⏸️ Pause Timer</button>
+                    <button class="btn-small btn-secondary" onclick="adminAdjustTimer(300)">+5 Min</button>
+                    <button class="btn-small btn-secondary" onclick="adminAdjustTimer(-300)">-5 Min</button>
+                    <button class="btn-small btn-secondary" onclick="adminResetTimer()">Reset (60m)</button>
+                    <button class="btn-small btn-danger" onclick="adminToggleFinalReveal()" id="admin-reveal-btn">📢 Reveal Final Murderer</button>
                 </div>
             </div>
-            <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">Logout</button>
+
+            <!-- Dashboard Navigation Tabs -->
+            <div class="tab-btn-group">
+                <button class="btn-small btn-gold" onclick="switchAdminTab('teams')" id="tab-btn-teams">Teams & Submissions</button>
+                <button class="btn-small btn-secondary" onclick="switchAdminTab('clues')" id="tab-btn-clues">Clue & Answer Editor</button>
+                <button class="btn-small btn-secondary" onclick="switchAdminTab('config')" id="tab-btn-config">Game Settings</button>
+            </div>
+
+            <!-- Tab 1: Teams & Progress -->
+            <div id="admin-tab-teams">
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Registered Teams</div>
+                        <div class="stat-value" id="admin-team-count">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Clues Solved Avg</div>
+                        <div class="stat-value" id="admin-avg-clues">0 / 7</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Top Score</div>
+                        <div class="stat-value" id="admin-top-score">0</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="flex-between">
+                        <h3>Registered Detective Squads</h3>
+                        <div>
+                            <button class="btn-small btn-secondary" onclick="adminSeedDemoTeams()">+ Add 2 Test Teams</button>
+                            <button class="btn-small btn-gold" onclick="exportResultsCSV()">📥 Download CSV</button>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Team Name</th>
+                                    <th>Members</th>
+                                    <th>Stage</th>
+                                    <th>Score</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-team-list">
+                                <tr><td colspan="6" class="text-center" style="color: #666;">No detective teams registered yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Clues & Puzzles Editor -->
+            <div id="admin-tab-clues" style="display: none;">
+                <div class="card">
+                    <h3>Investigation Clues & Answer Key</h3>
+                    <p style="font-size: 0.85rem; color: #888;">Facilitators can customize clue titles, riddles, accepted keywords, and hints without altering code.</p>
+                    <div id="admin-clue-editor-list"></div>
+                    <button class="btn btn-secondary" onclick="resetCluesToDefault()">Restore Original Clue Defaults</button>
+                </div>
+            </div>
+
+            <!-- Tab 3: Configuration -->
+            <div id="admin-tab-config" style="display: none;">
+                <div class="card">
+                    <h3>Game Parameters</h3>
+                    <label>Team Access Code</label>
+                    <input type="text" id="cfg-access-code" value="BW-1888">
+                    
+                    <label>Default Investigation Duration (Minutes)</label>
+                    <input type="number" id="cfg-duration" value="60">
+
+                    <label>Incorrect Answer Penalty</label>
+                    <input type="number" id="cfg-penalty-wrong" value="2">
+
+                    <label>Hint Point Deduction</label>
+                    <input type="number" id="cfg-penalty-hint" value="3">
+
+                    <button class="btn btn-gold" onclick="saveGameConfig()">Save Configuration</button>
+                </div>
+
+                <div class="card card-gold">
+                    <h3>Official Solution (Predetermined Fiction)</h3>
+                    <p><strong>Murderer:</strong> Richard, The Business Partner</p>
+                    <p><strong>Motive:</strong> Edward discovered Richard was embezzling shipping funds and prepared an audit report to dissolve Blackwood Shipping & Rail and notify police.</p>
+                    <p><strong>Timeline:</strong> 8:45 PM on November 14 (Poisoned Scotch in Edward's Study).</p>
+                    <p><strong>Smoking Guns:</strong> Monogrammed gold cufflink "R.H." by fireplace; Potassium cyanide in decanter; stolen ledger page; shattered alibi.</p>
+                </div>
+            </div>
         </section>
 
         <!-- Student Registration -->
         <section id="screen-student-reg" class="screen">
-            <div class="card">
+            <div class="card card-gold">
                 <h2>Detective Registration</h2>
-                <input type="text" id="team-name" placeholder="Team Name (e.g. Night Owls)">
-                <textarea id="team-members" placeholder="Team Member Names (4-5 names)" rows="3"></textarea>
-                <input type="text" id="access-code" placeholder="Enter Access Code">
-                <button class="btn" onclick="registerTeam()">Begin Investigation</button>
+                <p style="text-align: center; color: #aaa; font-size: 0.9rem;">Form a unit of 4–5 investigators to enter Blackwood Mansion.</p>
+                
+                <label>Investigation Squad Name</label>
+                <input type="text" id="team-name" placeholder="e.g. Baker Street Irregulars">
+                
+                <label>Squad Members (4 to 5 Names)</label>
+                <textarea id="team-members" placeholder="1. Alice Walker&#10;2. Marcus Vance&#10;3. Priya Sharma&#10;4. David Kim" rows="4"></textarea>
+                
+                <label>Mansion Gate Access Code</label>
+                <input type="text" id="access-code" placeholder="Enter facilitator access code (e.g. BW-1888)">
+                
+                <button class="btn" onclick="registerTeam()">Authenticate & Enter Mansion</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">Back</button>
             </div>
         </section>
 
         <!-- Rules & Briefing -->
         <section id="screen-rules" class="screen">
-            <div class="card">
-                <h2>Mission Briefing</h2>
-                <p><strong>Case:</strong> The Murder of Edward Blackwood</p>
-                <p><strong>Objective:</strong> Find 7 clues, identify the murderer, motive, and timeline.</p>
-                <h3>Official Rules</h3>
-                <ul>
-                    <li>Follow the sequence of locations.</li>
-                    <li>No sharing clues between teams.</li>
-                    <li>Hints cost -3 points.</li>
-                    <li>Do not destroy physical evidence props.</li>
+            <div class="card card-gold">
+                <h2>Mission Briefing & Rules</h2>
+                <div class="clue-visual-panel" style="min-height: auto;">
+                    <div class="clue-type-badge">Confidential Dossier</div>
+                    <p><strong>Victim:</strong> Lord Edward Blackwood (Age 54, Industrialist)</p>
+                    <p><strong>Crime Scene:</strong> Private Study, Blackwood Mansion</p>
+                    <p><strong>Cause of Death:</strong> Acute Poisoning, ruled homicide</p>
+                    <p><strong>Objective:</strong> Unlock 7 locations sequentially, gather evidence, construct the timeline, and pinpoint the culprit, motive, and murder weapon.</p>
+                </div>
+
+                <h3>Official Investigation Rules</h3>
+                <ul style="padding-left: 20px; font-size: 0.95rem;">
+                    <li><strong>Sequence:</strong> Clues must be unlocked in order (1 through 7).</li>
+                    <li><strong>Fair Play:</strong> Sharing answers between squads is strictly forbidden.</li>
+                    <li><strong>Penalties:</strong> Incorrect submissions deduct <strong>2 points</strong>. Hints cost <strong>3 points</strong>.</li>
+                    <li><strong>Evidence Preservation:</strong> Physical props must not be relocated or damaged.</li>
+                    <li><strong>Team Size:</strong> 4–5 detectives must collaborate actively.</li>
                 </ul>
-                <button class="btn" onclick="startInvestigation()">I Accept - Start Timer</button>
+
+                <div class="card" style="background: #111; margin-top: 15px; border-left: 3px solid var(--accent-gold);">
+                    <p style="margin: 0; font-size: 0.85rem;">Scoring Rubric: 35 pts (7 Clues) + 15 pts (Evidence) + 20 pts (Deduction) + 15 pts (Final Accusation) + 15 pts (Teamwork & Time) = <strong>100 Points Max</strong>.</p>
+                </div>
+
+                <button class="btn" onclick="startInvestigation()">I Agree to All Terms — Begin Clock</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-student-reg')">Back</button>
             </div>
         </section>
 
@@ -277,131 +772,1244 @@
         <section id="screen-game" class="screen">
             <div class="timer-bar" id="game-timer">60:00</div>
             
-            <div class="progress-stepper">
-                <div class="step complete">1</div>
-                <div class="step active">2</div>
-                <div class="step">3</div>
-                <div class="step">4</div>
-                <div class="step">5</div>
-                <div class="step">6</div>
-                <div class="step">7</div>
+            <div class="progress-stepper" id="game-stepper">
+                <div class="step active" onclick="stepperClick(0)">1</div>
+                <div class="step" onclick="stepperClick(1)">2</div>
+                <div class="step" onclick="stepperClick(2)">3</div>
+                <div class="step" onclick="stepperClick(3)">4</div>
+                <div class="step" onclick="stepperClick(4)">5</div>
+                <div class="step" onclick="stepperClick(5)">6</div>
+                <div class="step" onclick="stepperClick(6)">7</div>
             </div>
 
-            <div class="card">
-                <h2 id="location-name">The Library</h2>
-                <div class="clue-image">
-                    [Torn Diary Page Image]
+            <div class="card card-gold">
+                <div class="flex-between">
+                    <span class="clue-type-badge" id="clue-stage-badge">Location 1 of 7</span>
+                    <button class="btn-small btn-secondary" onclick="showScreen('screen-mansion-map')">🗺️ View Map</button>
                 </div>
-                <p id="clue-text">A page has been ripped from Edward's personal journal. It mentions a "heated argument regarding the merger" at 8:00 PM.</p>
                 
-                <div class="card" style="background: #000; margin-top: 15px;">
-                    <p><strong>Challenge:</strong> Who was Edward meeting at 8:00 PM?</p>
-                    <input type="text" id="clue-answer" placeholder="Your Answer...">
-                    <button class="btn" onclick="submitClue()">Submit Clue</button>
-                    <button class="btn btn-secondary" style="font-size: 0.8rem;" onclick="requestHint()">Request Hint (-3 pts)</button>
+                <h2 id="location-name">Mansion Entrance</h2>
+                <div style="font-size: 0.85rem; color: #c5a059; text-align: center; margin-bottom: 10px;" id="clue-subtitle">The Anonymous Sealed Letter</div>
+
+                <div class="clue-visual-panel">
+                    <div id="clue-artifact-display" class="artifact-preview">
+                        [Artifact Loading...]
+                    </div>
+                    <p id="clue-narrative" style="font-style: italic; color: #bbb; margin-top: 12px;"></p>
+                </div>
+                
+                <!-- Interactive Puzzle Section -->
+                <div class="card" style="background: #121212; border: 1px solid #333;">
+                    <p><strong style="color: var(--accent-gold);">Detective Challenge:</strong></p>
+                    <p id="clue-question">Examine the cipher and determine who sent the letter.</p>
+                    
+                    <label>Enter Answer or Codeword</label>
+                    <input type="text" id="clue-answer" placeholder="Type verified deduction here..." autocomplete="off">
+                    
+                    <!-- Optional Evidence Photo Simulator -->
+                    <div style="margin: 10px 0; font-size: 0.85rem;">
+                        <label>Attach Evidence Photo (Optional)</label>
+                        <input type="file" id="clue-file-upload" accept="image/*" style="font-size: 0.85rem; padding: 6px;">
+                        <span id="evidence-upload-status" style="color: #888; font-size: 0.8rem;"></span>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn" style="flex: 2; min-width: 160px;" onclick="submitClue()">Submit Deduction</button>
+                        <button class="btn btn-secondary" style="flex: 1; min-width: 140px; font-size: 0.85rem;" onclick="requestHint()">💡 Request Hint (-3 pts)</button>
+                    </div>
+
+                    <div id="hint-display" style="display:none; margin-top: 10px; padding: 10px; background: #1c180e; border: 1px dashed var(--accent-gold); color: #e5cf9c; font-size: 0.9rem;"></div>
                 </div>
             </div>
 
+            <!-- Stats Bar -->
             <div class="stats-grid">
-                <div class="stat-box">Score: <span id="current-score">10</span></div>
-                <div class="stat-box">Attempts: <span id="current-attempts">0</span></div>
+                <div class="stat-box">
+                    <div class="stat-label">Current Score</div>
+                    <div class="stat-value" id="current-score">100</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Attempts</div>
+                    <div class="stat-value" id="current-attempts">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Hints Used</div>
+                    <div class="stat-value" id="current-hints">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Team</div>
+                    <div class="stat-value" id="hud-team-name" style="font-size: 0.95rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">-</div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-secondary" style="font-size: 0.9rem;" onclick="openEvidenceModal()">📂 Open Detective Evidence Dossier</button>
+                <button class="btn btn-secondary" style="font-size: 0.9rem;" onclick="openStoryLoreModal()">👥 Suspect Dossier</button>
             </div>
         </section>
 
-        <!-- Final Submission -->
-        <section id="screen-final" class="screen">
-            <div class="card">
-                <h2>Final Case Report</h2>
-                <label>Primary Suspect:</label>
-                <input type="text" id="final-suspect" placeholder="Who killed Edward?">
+        <!-- Mansion Interactive Map Screen -->
+        <section id="screen-mansion-map" class="screen">
+            <div class="card card-gold">
+                <div class="flex-between">
+                    <h2>Blackwood Manor Blueprint</h2>
+                    <button class="btn-small btn-secondary" onclick="showScreen('screen-game')">Back to Clue</button>
+                </div>
+                <p style="text-align: center; color: #888; font-size: 0.9rem;">Select an unlocked room to navigate or review discovered findings.</p>
                 
-                <label>Motive:</label>
-                <textarea id="final-motive" placeholder="Why did they do it?"></textarea>
-                
-                <label>Evidence Summary:</label>
-                <textarea id="final-evidence" placeholder="Which clues prove this?"></textarea>
+                <div class="mansion-grid" id="mansion-rooms-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
 
-                <button class="btn" onclick="submitCase()">Submit Final Investigation</button>
+                <button class="btn" onclick="showScreen('screen-game')">Return to Investigation</button>
+            </div>
+        </section>
+
+        <!-- Final Submission Screen -->
+        <section id="screen-final" class="screen">
+            <div class="card card-gold">
+                <h2>Final Case Report & Accusation</h2>
+                <p style="text-align: center; color: #bbb;">All 7 locations have been investigated. Present your official indictment to Lead Inspector Blackwood.</p>
+                
+                <div class="card" style="background: #111;">
+                    <label>1. Accused Murderer</label>
+                    <p style="font-size: 0.8rem; color: #888; margin: 0 0 5px 0;">Select the suspect whose alibi and motive fit all 7 pieces of evidence:</p>
+                    <select id="final-suspect-select">
+                        <option value="">-- Choose Accused Suspect --</option>
+                        <option value="Thomas">Thomas – The Butler</option>
+                        <option value="Eleanor">Eleanor – The Niece</option>
+                        <option value="Dr. Victor">Dr. Victor – The Family Physician</option>
+                        <option value="Richard">Richard – The Business Partner</option>
+                        <option value="Clara">Clara – The Maid</option>
+                    </select>
+
+                    <label>2. Motive</label>
+                    <textarea id="final-motive" placeholder="Why did the murderer kill Edward Blackwood? (e.g. Audit, embezzlement, inheritance, blackmail)" rows="2"></textarea>
+                    
+                    <label>3. Approximate Murder Time</label>
+                    <input type="text" id="final-time" placeholder="e.g. 8:45 PM (November 14)">
+                    
+                    <label>4. Key Physical Evidence Proving Guilt</label>
+                    <textarea id="final-evidence" placeholder="List the physical clues found (cufflinks, poison, forged ledger, carriage tracks)..." rows="3"></textarea>
+
+                    <label>5. Deductive Explanation (How Your Squad Solved It)</label>
+                    <textarea id="final-explanation" placeholder="Provide a summary of how your squad pieced together the timeline and eliminated innocent suspects..." rows="4"></textarea>
+
+                    <button class="btn btn-gold" onclick="submitCase()">Submit Formal Accusation</button>
+                    <button class="btn btn-secondary" onclick="showScreen('screen-game')">Review Clues First</button>
+                </div>
             </div>
         </section>
 
         <!-- Result Screen -->
         <section id="screen-results" class="screen text-center">
-            <div class="card">
-                <h2 class="accent-text">Investigation Complete</h2>
-                <p>Your report has been submitted to the Lead Inspector.</p>
-                <div style="font-size: 3rem; margin: 20px 0;">85/100</div>
-                <p>Wait for the Facilitator to reveal the truth.</p>
-                <button class="btn btn-secondary" onclick="location.reload()">Return Home</button>
+            <div class="card card-gold">
+                <h2 class="accent-text">Investigation Concluded</h2>
+                <p>Your team's case file has been sealed and registered with the Facilitator.</p>
+                
+                <div class="card" style="background: #0f0f0f; border: 1px solid var(--accent-gold); margin: 20px auto; max-width: 400px;">
+                    <div class="stat-label">Total Investigation Score</div>
+                    <div id="final-score-display" style="font-size: 3.5rem; color: var(--accent-gold); font-weight: bold; margin: 10px 0;">85 / 100</div>
+                    <div id="final-score-status" style="font-size: 1rem; color: #bbb;">Evaluation Complete</div>
+                </div>
+
+                <div class="card" id="final-reveal-box" style="text-align: left; background: #1a1212; border: 1px dashed var(--accent-gold);">
+                    <h3 style="color: var(--accent-gold); text-align: left;">Facilitator's Official Verdict:</h3>
+                    <div id="reveal-content-container">
+                        <p style="color: #aaa; font-style: italic;">The Lead Inspector is currently validating all squad reports. The true identity of the murderer will be unveiled when the Facilitator triggers the grand reveal.</p>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="openEvidenceModal()">Examine Master Evidence Dossier</button>
+                <button class="btn btn-secondary" onclick="handleExitOrReset()">Return to Main Entrance</button>
             </div>
         </section>
 
     </div>
 
+    <!-- MODAL 1: Evidence Dossier & Notes -->
+    <div class="modal" id="modal-evidence">
+        <div class="modal-content">
+            <div class="flex-between">
+                <h3>Detective Evidence Dossier</h3>
+                <button class="btn-small btn-secondary" onclick="closeModal('modal-evidence')">✕ Close</button>
+            </div>
+            <p style="font-size: 0.85rem; color: #888;">Catalog of all clues and physical evidence discovered so far.</p>
+            <div id="evidence-dossier-items">
+                <!-- Dynamically filled with unlocked clues -->
+            </div>
+            <button class="btn btn-secondary" onclick="closeModal('modal-evidence')">Done</button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Suspect Profiles & Lore -->
+    <div class="modal" id="modal-story">
+        <div class="modal-content">
+            <div class="flex-between">
+                <h3>Suspect Profiles & Case Background</h3>
+                <button class="btn-small btn-secondary" onclick="closeModal('modal-story')">✕ Close</button>
+            </div>
+            
+            <p style="font-size: 0.9rem; color: #ddd; margin: 10px 0;">Lord Edward Blackwood invited five people to his country estate on November 14. At 9:15 PM, his butler found him collapsed over his desk.</p>
+            
+            <div class="suspect-grid">
+                <div class="suspect-card">
+                    <div class="suspect-name">Thomas</div>
+                    <div class="suspect-role">The Butler</div>
+                    <p style="font-size: 0.8rem; color: #bbb; margin-top: 5px;">30 years in service. Holds all keys. Alibi: In kitchen brewing coffee from 8:30 to 9:00 PM with Clara.</p>
+                </div>
+                <div class="suspect-card">
+                    <div class="suspect-name">Eleanor</div>
+                    <div class="suspect-role">The Niece</div>
+                    <p style="font-size: 0.8rem; color: #bbb; margin-top: 5px;">Heavily indebted from gambling. Heard Edward planned to donate his fortune. Alibi: Playing piano in parlor.</p>
+                </div>
+                <div class="suspect-card">
+                    <div class="suspect-name">Dr. Victor</div>
+                    <div class="suspect-role">The Physician</div>
+                    <p style="font-size: 0.8rem; color: #bbb; margin-top: 5px;">Conducted controversial apothecary experiments. Prescribed Edward's tonics. Alibi: In the study earlier at 7:30 PM.</p>
+                </div>
+                <div class="suspect-card">
+                    <div class="suspect-name">Richard</div>
+                    <div class="suspect-role">Business Partner</div>
+                    <p style="font-size: 0.8rem; color: #bbb; margin-top: 5px;">Co-owner of Blackwood Shipping & Rail. Claimed he left at 8:00 PM, but coach was seen near gates at 9:00 PM!</p>
+                </div>
+                <div class="suspect-card">
+                    <div class="suspect-name">Clara</div>
+                    <div class="suspect-role">The Maid</div>
+                    <p style="font-size: 0.8rem; color: #bbb; margin-top: 5px;">Recently hired. Overheard shouting in study. Saw muddy footprints and a dropped golden object.</p>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="closeModal('modal-story')">Close Dossier</button>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Facilitator Disqualify Team -->
+    <div class="modal" id="modal-disqualify">
+        <div class="modal-content">
+            <h3 style="color: #ff4d4d;">Disqualify Detective Team</h3>
+            <p>Team: <strong id="dq-team-name-label" style="color: var(--accent-gold);"></strong></p>
+            <label>Reason for Disqualification</label>
+            <textarea id="dq-reason-input" placeholder="e.g. Unauthorized outside assistance, destruction of clues, sequence violation..." rows="3"></textarea>
+            <div style="display:flex; gap:10px; margin-top: 15px;">
+                <button class="btn btn-danger" onclick="confirmDisqualification()">Confirm Disqualification</button>
+                <button class="btn btn-secondary" onclick="closeModal('modal-disqualify')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Simple Screen Management Logic
+        /* ==========================================================================
+           1. MASTER DATA: 7 INVESTIGATION STAGES
+           ========================================================================== */
+        const DEFAULT_CLUES = [
+            {
+                id: 1,
+                room: "Mansion Entrance",
+                title: "The Anonymous Wax-Sealed Letter",
+                badge: "Entrance Foyer",
+                artifact: `FROM: An Unnamed Friend of the House\nTO: Lord Edward Blackwood\nDATE: 14 November\n\n"Beware tonight's meeting. Your closest associate in trade has falsified the shipping manifests. The wolf sits at your right hand."\n\n[CIPHER ENCRYPTED ON FLAP]:\nP - A - R - T - N - E - R`,
+                narrative: "Slipped beneath the heavy iron entrance doors just before dusk. A frantic handwriting warns of a betrayal close to home.",
+                question: "According to the informant, which role or associate of Edward was betraying him?",
+                acceptedAnswers: ["partner", "business partner", "richard", "business", "shipping partner"],
+                hint: "Look at Edward's commercial enterprise. Who shares ownership with him?",
+                points: 5,
+                deductionKey: "An informant warned Edward that his commercial associate was cooking the books."
+            },
+            {
+                id: 2,
+                room: "The Grand Library",
+                title: "The Torn Diary Page",
+                badge: "West Wing Library",
+                artifact: `[TORN LEATHERBOUND JOURNAL EXCERPT]\n8:00 PM: Met with R. regarding the missing cargo in Liverpool.\nHe was nervous, clutching his silver flask.\n8:30 PM: I confronted him with the private books.\nI told him tomorrow morning I will publish the AUDIT report and dissolve our firm.\nHe turned pale and begged me to reconsider...`,
+                narrative: "Discovered behind an antique volume of Shakespeare. The page was ripped hastily, but the ink remains clear.",
+                question: "What financial document did Edward threaten to publish the following morning?",
+                acceptedAnswers: ["audit", "audit report", "ledger", "books", "audit books"],
+                hint: "An official financial examination of company accounts to expose fraud.",
+                points: 5,
+                deductionKey: "Edward prepared an audit report proving theft, scheduled to be delivered to police."
+            },
+            {
+                id: 3,
+                room: "The Dining Room",
+                title: "The Broken Photograph Frame",
+                badge: "Formal Dining Hall",
+                artifact: `[SHATTERED SILVER FRAME FOUND BY FIREPLACE]\nA formal portrait of the Blackwood Shipping board members.\nA piece of velvet backing bears an impression:\n"Found dropped on the oriental rug: A solid gold CUFFLINK bearing initials R.H."`,
+                narrative: "The glass was crushed underfoot. Beside the hearth, something fell from a gentleman's formal jacket during a scuffle.",
+                question: "What specific gentleman's accessory was lost by the hearth bearing the suspect's initials?",
+                acceptedAnswers: ["cufflink", "gold cufflink", "cufflinks", "cuff link", "cuff-link"],
+                hint: "A piece of jewelry used to fasten the sleeves of a dress shirt.",
+                points: 5,
+                deductionKey: "A gold monogrammed cufflink 'R.H.' was recovered from the crime scene rug."
+            },
+            {
+                id: 4,
+                room: "Master Bedroom",
+                title: "The Coded Telegram",
+                badge: "Second Floor Suite",
+                artifact: `[INTERCEPTED TELEGRAPH DISPATCH]\nCIPHER (Caesar Shift -3):\nS - B - B - R - V - Q\n\nDECODER WHEEL:\nD -> A | E -> B | F -> C\nShift each letter backward by 3 positions to reveal the toxic method.\n\nS(-3)=P | B(-3)=O | B(-3)=I | R(-3)=S | V(-3)=O | Q(-3)=N`,
+                narrative: "Tucked inside Edward's mahogany wardrobe secret drawer. The telegram reveals the dangerous chemical requested in town.",
+                question: "Decode the -3 Caesar cipher (SBBRVQ) to name the weapon of choice:",
+                acceptedAnswers: ["poison", "cyanide", "potassium cyanide", "arsenic"],
+                hint: "Take each letter back by 3 steps in the alphabet (e.g. S -> P, B -> O...).",
+                points: 5,
+                deductionKey: "The killer planned to administer a lethal poison concealed in beverage."
+            },
+            {
+                id: 5,
+                room: "Victorian Laboratory",
+                title: "Toxicology Report on the Scotch Decanter",
+                badge: "Attic Apothecary",
+                artifact: `[CHEMICAL APOTHECARY LOG]\nSPECIMEN: Amber crystal scotch decanter from study.\nTEST RESULT: High concentration of Prussic Acid / Potassium CYANIDE.\nCHARACTERISTIC: Faint aroma of bitter almonds.\nTIME TO FATALITY: Approximately 10 to 15 minutes post ingestion.`,
+                narrative: "Dr. Victor's notes on Edward's drink. The lethal compound was mixed into the high-end Scottish whiskey.",
+                question: "Which fast-acting poison smelling of bitter almonds was detected in Edward's decanter?",
+                acceptedAnswers: ["cyanide", "potassium cyanide", "prussic acid"],
+                hint: "A notoriously swift poison starting with the letter 'C'.",
+                points: 5,
+                deductionKey: "Potassium cyanide was introduced into Edward's study scotch decanter."
+            },
+            {
+                id: 6,
+                room: "Wine Cellar & Vault",
+                title: "The Clock of the Broken Hour",
+                badge: "Basement Vaults",
+                artifact: `[MEMORANDUM OF EVIDENCE]\nWhen Edward collapsed against his mahogany desk, his pocket watch hit the brass corner and stopped dead.\nThe hour hand pointed at 8 (VIII).\nThe minute hand pointed exactly at the numeral 9 (45 minutes past the hour).\n\n24-Hour Format: 20:45`,
+                narrative: "Beneath the vaulted stone arches, the cellar master documented the exact time the pocket watch mechanism ceased ticking.",
+                question: "At what exact time did the pocket watch stop? (Format: 8:45 or 20:45)",
+                acceptedAnswers: ["8:45", "8:45 pm", "8:45pm", "20:45", "08:45", "8 45"],
+                hint: "The eighth hour and forty-five minutes in the evening.",
+                points: 5,
+                deductionKey: "The pocket watch confirms the fatal collapse occurred precisely at 8:45 PM."
+            },
+            {
+                id: 7,
+                room: "Edward's Private Study",
+                title: "The Collapsed Alibi & Carriage Records",
+                badge: "Crime Scene",
+                artifact: `[GATEKEEPER & SERVANT ALIBI LOG]\n1. Thomas & Clara: Brewing and straining coffee in pantry 8:30 - 9:00 PM (Verified by 3 servants).\n2. Eleanor: Practicing Chopin in parlor 8:35 - 9:05 PM (Heard across hall).\n3. Dr. Victor: In parlor with Eleanor listening to music.\n4. RICHARD: Claimed he departed at 8:00 PM.\nGATEKEEPER LOG: "Lord Richard's black carriage did NOT exit the main gates until 9:00 PM. Carriage horse was sweating."`,
+                narrative: "The study door was left ajar. The alibis of four suspects are airtight. Only one person lied about their departure time.",
+                question: "Whose alibi was completely disproven by the gatekeeper carriage records?",
+                acceptedAnswers: ["richard", "richard the business partner", "partner richard"],
+                hint: "The business partner who claimed he left forty-five minutes earlier than he actually did.",
+                points: 5,
+                deductionKey: "Richard lied about his 8:00 PM departure; his coach waited until 9:00 PM after the murder."
+            }
+        ];
+
+        /* ==========================================================================
+           2. STATE MANAGEMENT & STORAGE
+           ========================================================================== */
+        let state = {
+            currentScreen: 'screen-welcome',
+            adminLoggedIn: false,
+            activeTeam: null,
+            timerSeconds: 3600,
+            timerRunning: true,
+            timerInterval: null,
+            audioEnabled: false,
+            audioContext: null,
+            ambientOscillators: [],
+            revealedTruth: false,
+            clues: []
+        };
+
+        // Initialize state from LocalStorage
+        function initApp() {
+            // Load custom clues or defaults
+            const savedClues = localStorage.getItem('bw_clues');
+            state.clues = savedClues ? JSON.parse(savedClues) : DEFAULT_CLUES;
+
+            // Load timer config
+            const savedTimer = localStorage.getItem('bw_timer_duration');
+            if (savedTimer) state.timerSeconds = parseInt(savedTimer, 10);
+
+            // Load saved team session if any
+            const savedTeam = localStorage.getItem('bw_current_team');
+            if (savedTeam) {
+                state.activeTeam = JSON.parse(savedTeam);
+                updateHud();
+            }
+
+            // Check if final truth is revealed
+            state.revealedTruth = localStorage.getItem('bw_truth_revealed') === 'true';
+
+            // Start master countdown
+            startMasterTimer();
+            renderAdminTeamList();
+            renderClueEditor();
+            renderMansionRooms();
+        }
+
+        /* ==========================================================================
+           3. AUDIO SYNTHESIS ENGINE (ZERO EXTERNAL ASSETS)
+           ========================================================================== */
+        function toggleAudio() {
+            const btn = document.getElementById('audio-toggle-btn');
+            if (!state.audioContext) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                state.audioContext = new AudioCtx();
+            }
+            if (state.audioContext.state === 'suspended') {
+                state.audioContext.resume();
+            }
+
+            state.audioEnabled = !state.audioEnabled;
+            if (state.audioEnabled) {
+                btn.textContent = '🔊 Sound: On';
+                btn.style.borderColor = '#c5a059';
+                playAmbientDrone();
+                playSound('chime');
+            } else {
+                btn.textContent = '🔈 Sound: Off';
+                stopAmbientDrone();
+            }
+        }
+
+        function playSound(type) {
+            if (!state.audioEnabled || !state.audioContext) return;
+            try {
+                const ctx = state.audioContext;
+                const now = ctx.currentTime;
+                
+                if (type === 'click') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.exponentialRampToValueAtTime(80, now + 0.05);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } 
+                else if (type === 'correct') {
+                    // Gothic harmonic triumphant bell
+                    [440, 554.37, 659.25, 880].forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                        gain.gain.setValueAtTime(0.25, now + idx * 0.08);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 1.2);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + idx * 0.08);
+                        osc.stop(now + idx * 0.08 + 1.2);
+                    });
+                } 
+                else if (type === 'wrong') {
+                    // Low ominous dissonant brass
+                    [146.83, 155.56].forEach(freq => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.3, now);
+                        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.6);
+                    });
+                }
+                else if (type === 'chime') {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.8);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.8);
+                }
+            } catch (e) {
+                console.warn("Audio synthesis error:", e);
+            }
+        }
+
+        function playAmbientDrone() {
+            if (!state.audioContext) return;
+            stopAmbientDrone();
+            const ctx = state.audioContext;
+            // Mysterious deep Gothic drone in D minor (73.4Hz + 110Hz + 220Hz)
+            const freqs = [73.42, 110.0, 146.83];
+            freqs.forEach(f => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(f, ctx.currentTime);
+                gain.gain.setValueAtTime(0.04, ctx.currentTime);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                state.ambientOscillators.push({ osc, gain });
+            });
+        }
+
+        function stopAmbientDrone() {
+            state.ambientOscillators.forEach(o => {
+                try { o.osc.stop(); } catch(e){}
+            });
+            state.ambientOscillators = [];
+        }
+
+        /* ==========================================================================
+           4. TIMER & CLOCK LOGIC
+           ========================================================================= */
+        function startMasterTimer() {
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            state.timerInterval = setInterval(() => {
+                if (state.timerRunning && state.timerSeconds > 0) {
+                    state.timerSeconds--;
+                    updateTimerDisplays();
+                } else if (state.timerSeconds <= 0) {
+                    onTimerExpired();
+                }
+            }, 1000);
+            updateTimerDisplays();
+        }
+
+        function updateTimerDisplays() {
+            const minutes = Math.floor(state.timerSeconds / 60);
+            const seconds = state.timerSeconds % 60;
+            const str = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+            const elGame = document.getElementById('game-timer');
+            const elAdmin = document.getElementById('admin-master-clock');
+            if (elGame) elGame.textContent = str;
+            if (elAdmin) elAdmin.textContent = str;
+
+            if (state.timerSeconds < 300) {
+                if (elGame) elGame.classList.add('timer-warning');
+            } else {
+                if (elGame) elGame.classList.remove('timer-warning');
+            }
+        }
+
+        function onTimerExpired() {
+            state.timerRunning = false;
+            showBanner("⏳ The investigation clock has run out! The doors are sealed.", "danger");
+            const btn = document.getElementById('clue-answer');
+            if (btn) btn.disabled = true;
+        }
+
+        function adminToggleTimer() {
+            state.timerRunning = !state.timerRunning;
+            const btn = document.getElementById('admin-timer-toggle-btn');
+            const status = document.getElementById('admin-game-status');
+            if (state.timerRunning) {
+                btn.textContent = '⏸️ Pause Timer';
+                status.textContent = 'Active';
+                status.style.color = 'var(--accent-gold)';
+            } else {
+                btn.textContent = '▶️ Resume Timer';
+                status.textContent = 'Paused';
+                status.style.color = '#ff9900';
+            }
+        }
+
+        function adminAdjustTimer(secs) {
+            state.timerSeconds = Math.max(0, state.timerSeconds + secs);
+            updateTimerDisplays();
+            showBanner(`Facilitator adjusted time: ${secs > 0 ? '+' : ''}${secs/60} minutes`, 'info');
+        }
+
+        function adminResetTimer() {
+            state.timerSeconds = 3600;
+            state.timerRunning = true;
+            updateTimerDisplays();
+        }
+
+        /* ==========================================================================
+           5. NAVIGATION & SCREEN CONTROLS
+           ========================================================================== */
         function showScreen(screenId) {
+            playSound('click');
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            window.scrollTo(0, 0);
+            const target = document.getElementById(screenId);
+            if (target) {
+                target.classList.add('active');
+                state.currentScreen = screenId;
+                window.scrollTo(0, 0);
+            }
+
+            // Header buttons visibility
+            const isPlaying = screenId === 'screen-game' || screenId === 'screen-mansion-map' || screenId === 'screen-final';
+            document.getElementById('btn-evidence-dossier').style.display = isPlaying ? 'inline-block' : 'none';
+            document.getElementById('btn-map-shortcut').style.display = isPlaying ? 'inline-block' : 'none';
+
+            // Refresh specific screen contents
+            if (screenId === 'screen-game') {
+                renderCurrentClue();
+            } else if (screenId === 'screen-mansion-map') {
+                renderMansionRooms();
+            } else if (screenId === 'screen-admin-dashboard') {
+                renderAdminTeamList();
+            }
         }
 
-        // Mock Navigation Logic
-        function adminLogin() {
-            // In real app, validate against backend
-            showScreen('screen-admin-dashboard');
+        function handleExitOrReset() {
+            if (state.activeTeam) {
+                if (confirm("Return to main reception hall? (Your investigation progress is safely preserved)")) {
+                    showScreen('screen-welcome');
+                }
+            } else {
+                showScreen('screen-welcome');
+            }
         }
 
+        function showBanner(msg, type = "info") {
+            const b = document.getElementById('game-banner');
+            b.textContent = msg;
+            b.className = `banner banner-${type}`;
+            b.style.display = 'block';
+            setTimeout(() => { b.style.display = 'none'; }, 5000);
+        }
+
+        /* ==========================================================================
+           6. TEAM REGISTRATION & SESSION MANAGEMENT
+           ========================================================================== */
         function registerTeam() {
-            const name = document.getElementById('team-name').value;
-            if(!name) return alert("Please enter a team name.");
+            const name = document.getElementById('team-name').value.trim();
+            const members = document.getElementById('team-members').value.trim();
+            const code = document.getElementById('access-code').value.trim();
+            const validCode = localStorage.getItem('bw_access_code') || 'BW-1888';
+
+            if (!name) return alert("Please specify your Detective Squad Name.");
+            if (!members) return alert("Please list the 4 to 5 detective squad member names.");
+            if (code.toUpperCase() !== validCode.toUpperCase()) {
+                playSound('wrong');
+                return alert(`Invalid Mansion Gate Access Code! (Hint: Ask facilitator or use '${validCode}')`);
+            }
+
+            // Check if team already exists or create new
+            let allTeams = getStoredTeams();
+            let team = allTeams.find(t => t.name.toLowerCase() === name.toLowerCase());
+
+            if (!team) {
+                team = {
+                    id: 'team_' + Date.now(),
+                    name: name,
+                    members: members,
+                    currentClueIndex: 0,
+                    score: 100,
+                    attempts: 0,
+                    hintsUsed: 0,
+                    unlockedClues: [0],
+                    answersSubmitted: {},
+                    evidencePhotos: {},
+                    finalSubmission: null,
+                    status: 'Active',
+                    disqualificationReason: '',
+                    registeredAt: new Date().toISOString()
+                };
+                allTeams.push(team);
+                saveTeams(allTeams);
+            }
+
+            state.activeTeam = team;
+            localStorage.setItem('bw_current_team', JSON.stringify(team));
+            updateHud();
+
+            playSound('correct');
             showScreen('screen-rules');
         }
 
         function startInvestigation() {
+            playSound('chime');
             showScreen('screen-game');
-            startTimer(3600);
+            showBanner(`Welcome Squad ${state.activeTeam.name}. Location 1 is unsealed.`, 'info');
         }
 
-        let timeLeft = 3600;
-        function startTimer(duration) {
-            let timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
+        function getStoredTeams() {
+            const data = localStorage.getItem('bw_all_teams');
+            return data ? JSON.parse(data) : [];
+        }
 
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
+        function saveTeams(teams) {
+            localStorage.setItem('bw_all_teams', JSON.stringify(teams));
+        }
 
-                const display = document.getElementById('game-timer');
-                if(display) display.textContent = minutes + ":" + seconds;
+        function syncActiveTeam() {
+            if (!state.activeTeam) return;
+            let teams = getStoredTeams();
+            const idx = teams.findIndex(t => t.id === state.activeTeam.id);
+            if (idx >= 0) {
+                teams[idx] = state.activeTeam;
+            } else {
+                teams.push(state.activeTeam);
+            }
+            saveTeams(teams);
+            localStorage.setItem('bw_current_team', JSON.stringify(state.activeTeam));
+            updateHud();
+        }
 
-                if (--timer < 0) {
-                    timer = 0;
-                    // Handle game over logic here
+        function updateHud() {
+            if (!state.activeTeam) return;
+            document.getElementById('current-score').textContent = state.activeTeam.score;
+            document.getElementById('current-attempts').textContent = state.activeTeam.attempts;
+            document.getElementById('current-hints').textContent = state.activeTeam.hintsUsed;
+            document.getElementById('hud-team-name').textContent = state.activeTeam.name;
+        }
+
+        /* ==========================================================================
+           7. CLUE INVESTIGATION & PROGRESSION ENGINE
+           ========================================================================== */
+        function renderCurrentClue() {
+            if (!state.activeTeam) return;
+            const clueIdx = state.activeTeam.currentClueIndex;
+
+            if (clueIdx >= state.clues.length) {
+                showScreen('screen-final');
+                return;
+            }
+
+            const clue = state.clues[clueIdx];
+
+            document.getElementById('clue-stage-badge').textContent = `Stage ${clueIdx + 1} of ${state.clues.length}`;
+            document.getElementById('location-name').textContent = clue.room;
+            document.getElementById('clue-subtitle').textContent = clue.title;
+            document.getElementById('clue-artifact-display').textContent = clue.artifact;
+            document.getElementById('clue-narrative').textContent = clue.narrative;
+            document.getElementById('clue-question').textContent = clue.question;
+
+            // Reset inputs
+            const answerInput = document.getElementById('clue-answer');
+            answerInput.value = '';
+            answerInput.focus();
+            document.getElementById('hint-display').style.display = 'none';
+            document.getElementById('evidence-upload-status').textContent = '';
+
+            updateStepperUI(clueIdx);
+        }
+
+        function updateStepperUI(currentIdx) {
+            const steps = document.querySelectorAll('#game-stepper .step');
+            steps.forEach((step, idx) => {
+                step.className = 'step';
+                if (idx < currentIdx) {
+                    step.classList.add('complete');
+                    step.innerHTML = '✓';
+                } else if (idx === currentIdx) {
+                    step.classList.add('active');
+                    step.innerHTML = idx + 1;
+                } else {
+                    step.innerHTML = idx + 1;
                 }
-            }, 1000);
+            });
         }
 
-        function submitClue() {
-            // Mocking clue progression
-            alert("Correct! Clue 3 Unlocked.");
-            // In a real app, this would fetch the next clue from the DB
-        }
-
-        function requestHint() {
-            const confirmed = confirm("This will deduct 3 points. Continue?");
-            if(confirmed) {
-                alert("Hint: Check the business partner's initials.");
+        function stepperClick(idx) {
+            if (!state.activeTeam) return;
+            if (state.activeTeam.unlockedClues.includes(idx)) {
+                state.activeTeam.currentClueIndex = idx;
+                syncActiveTeam();
+                renderCurrentClue();
+            } else {
+                playSound('wrong');
+                showBanner(`Stage ${idx + 1} is locked. Solve earlier locations first.`, 'danger');
             }
         }
 
+        function submitClue() {
+            if (!state.activeTeam) return;
+            if (!state.timerRunning) {
+                return alert("The game clock is currently paused or expired.");
+            }
+
+            const input = document.getElementById('clue-answer').value.trim().toLowerCase();
+            const clueIdx = state.activeTeam.currentClueIndex;
+            const clue = state.clues[clueIdx];
+
+            if (!input) {
+                return alert("Please enter your squad's deduction before submitting.");
+            }
+
+            state.activeTeam.attempts++;
+
+            // Handle optional photo upload simulation
+            const fileInput = document.getElementById('clue-file-upload');
+            if (fileInput.files.length > 0) {
+                state.activeTeam.evidencePhotos[clueIdx] = fileInput.files[0].name;
+            }
+
+            // Answer evaluation with flexible matching
+            const isCorrect = clue.acceptedAnswers.some(ans => {
+                const cleanAns = ans.trim().toLowerCase();
+                return input === cleanAns || input.includes(cleanAns) || cleanAns.includes(input);
+            });
+
+            if (isCorrect) {
+                playSound('correct');
+                state.activeTeam.answersSubmitted[clueIdx] = input;
+
+                // Unlock next stage
+                const nextIdx = clueIdx + 1;
+                if (!state.activeTeam.unlockedClues.includes(nextIdx)) {
+                    state.activeTeam.unlockedClues.push(nextIdx);
+                }
+
+                if (nextIdx < state.clues.length) {
+                    state.activeTeam.currentClueIndex = nextIdx;
+                    syncActiveTeam();
+                    showBanner(`✨ Correct Deduction! Unlocking Location ${nextIdx + 1}...`, 'success');
+                    setTimeout(() => {
+                        renderCurrentClue();
+                    }, 1200);
+                } else {
+                    syncActiveTeam();
+                    showBanner("🎉 All 7 Mansion locations examined! Proceed to Final Accusation.", "success");
+                    setTimeout(() => {
+                        showScreen('screen-final');
+                    }, 1500);
+                }
+            } else {
+                playSound('wrong');
+                // Apply incorrect answer penalty
+                const penalty = parseInt(localStorage.getItem('bw_penalty_wrong') || '2', 10);
+                state.activeTeam.score = Math.max(0, state.activeTeam.score - penalty);
+                syncActiveTeam();
+                showBanner(`❌ Incorrect deduction. Penalty applied: -${penalty} pts. Try examining the evidence again.`, 'danger');
+            }
+        }
+
+        function requestHint() {
+            if (!state.activeTeam) return;
+            const clueIdx = state.activeTeam.currentClueIndex;
+            const clue = state.clues[clueIdx];
+            const penalty = parseInt(localStorage.getItem('bw_penalty_hint') || '3', 10);
+
+            const confirmed = confirm(`Requesting a hint will deduct ${penalty} points from your final score. Continue?`);
+            if (confirmed) {
+                playSound('click');
+                state.activeTeam.hintsUsed++;
+                state.activeTeam.score = Math.max(0, state.activeTeam.score - penalty);
+                syncActiveTeam();
+
+                const hintBox = document.getElementById('hint-display');
+                hintBox.innerHTML = `<strong>Inspector's Note:</strong> ${clue.hint}`;
+                hintBox.style.display = 'block';
+                showBanner(`Hint acquired (-${penalty} pts).`, 'info');
+            }
+        }
+
+        /* ==========================================================================
+           8. MANSION BLUEPRINT MAP & EVIDENCE DOSSIER
+           ========================================================================== */
+        function renderMansionRooms() {
+            const container = document.getElementById('mansion-rooms-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const currentIdx = state.activeTeam ? state.activeTeam.currentClueIndex : 0;
+            const unlocked = state.activeTeam ? state.activeTeam.unlockedClues : [0];
+
+            state.clues.forEach((c, idx) => {
+                const card = document.createElement('div');
+                const isUnlocked = unlocked.includes(idx);
+                const isCurrent = idx === currentIdx;
+
+                card.className = `room-card ${isUnlocked ? 'unlocked' : 'locked'} ${isCurrent ? 'current' : ''}`;
+                card.innerHTML = `
+                    <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: bold;">ROOM 0${idx + 1}</div>
+                    <div style="font-size: 1.05rem; font-weight: bold; margin: 4px 0;">${c.room}</div>
+                    <div style="font-size: 0.85rem; color: #888;">${c.title}</div>
+                    <div class="room-status">${isUnlocked ? (isCurrent ? '⭐ Investigating Now' : '✓ Unlocked') : '🔒 Sealed'}</div>
+                `;
+
+                if (isUnlocked) {
+                    card.onclick = () => {
+                        state.activeTeam.currentClueIndex = idx;
+                        syncActiveTeam();
+                        showScreen('screen-game');
+                    };
+                }
+                container.appendChild(card);
+            });
+        }
+
+        function openEvidenceModal() {
+            playSound('click');
+            const list = document.getElementById('evidence-dossier-items');
+            list.innerHTML = '';
+
+            const unlocked = state.activeTeam ? state.activeTeam.unlockedClues : [0];
+            if (unlocked.length === 0) {
+                list.innerHTML = `<p style="color: #888;">No clues unlocked yet.</p>`;
+            } else {
+                unlocked.forEach(idx => {
+                    if (idx < state.clues.length) {
+                        const clue = state.clues[idx];
+                        const div = document.createElement('div');
+                        div.className = 'card';
+                        div.style.background = '#141414';
+                        div.style.marginBottom = '12px';
+                        div.innerHTML = `
+                            <h4 style="text-align: left; margin: 0 0 5px 0;">${idx + 1}. ${clue.room} — ${clue.title}</h4>
+                            <div style="font-size: 0.85rem; color: #aaa; font-style: italic;">"${clue.deductionKey}"</div>
+                        `;
+                        list.appendChild(div);
+                    }
+                });
+            }
+
+            document.getElementById('modal-evidence').classList.add('active');
+        }
+
+        function openStoryLoreModal() {
+            playSound('click');
+            document.getElementById('modal-story').classList.add('active');
+        }
+
+        function closeModal(id) {
+            playSound('click');
+            document.getElementById(id).classList.remove('active');
+        }
+
+        /* ==========================================================================
+           9. FINAL INVESTIGATION SUBMISSION & SCORING
+           ========================================================================== */
         function submitCase() {
+            if (!state.activeTeam) return;
+            const suspect = document.getElementById('final-suspect-select').value;
+            const motive = document.getElementById('final-motive').value.trim();
+            const time = document.getElementById('final-time').value.trim();
+            const evidence = document.getElementById('final-evidence').value.trim();
+            const explanation = document.getElementById('final-explanation').value.trim();
+
+            if (!suspect) return alert("Please select the primary accused suspect.");
+            if (!motive) return alert("Please specify the motive behind the murder.");
+            if (!time) return alert("Please provide the approximate time of the crime.");
+            if (!explanation) return alert("Please summarize how your squad solved the case.");
+
+            // Calculate final rubric score
+            // Base score from progression (35 pts clues + bonus/deductions)
+            let baseScore = state.activeTeam.score; // starts at 100 with penalties subtracted
+            let finalBonus = 0;
+
+            // Suspect check (Richard is the correct answer)
+            const isSuspectCorrect = suspect.toLowerCase() === 'richard';
+            if (!isSuspectCorrect) {
+                baseScore = Math.max(0, baseScore - 20); // heavy penalty for false accusation
+            }
+
+            state.activeTeam.finalSubmission = {
+                suspect: suspect,
+                motive: motive,
+                time: time,
+                evidence: evidence,
+                explanation: explanation,
+                isCorrect: isSuspectCorrect,
+                submittedAt: new Date().toISOString()
+            };
+
+            state.activeTeam.status = 'Submitted';
+            state.activeTeam.score = baseScore;
+            syncActiveTeam();
+
+            playSound('correct');
+            document.getElementById('final-score-display').textContent = `${state.activeTeam.score} / 100`;
+            renderFinalRevealState();
             showScreen('screen-results');
         }
 
-        // Initialize
-        console.log("Blackwood Mansion Investigation Loaded.");
+        function renderFinalRevealState() {
+            const container = document.getElementById('reveal-content-container');
+            const isRevealed = state.revealedTruth || localStorage.getItem('bw_truth_revealed') === 'true';
+
+            if (isRevealed) {
+                container.innerHTML = `
+                    <div style="background: #2b0e0e; border: 1px solid var(--accent-gold); padding: 15px; border-radius: 4px; margin-top: 10px;">
+                        <h4 style="color: #ffcccc; margin: 0 0 8px 0; text-align: left;">CULPRIT IDENTIFIED: RICHARD, THE BUSINESS PARTNER</h4>
+                        <p style="font-size: 0.9rem; line-height: 1.5; color: #edd;">
+                            <strong>The Truth Revealed:</strong> Lord Edward Blackwood discovered that Richard had embezzled thousands from Blackwood Shipping. When Edward confronted him with the private audit report at 8:30 PM, Richard poured potassium cyanide into Edward's crystal scotch decanter. Edward collapsed at 8:45 PM. In his panic, Richard broke his monogrammed gold cufflink ('R.H.') on the hearth rug and fled through the service gates at 9:00 PM.
+                        </p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <p style="color: #aaa; font-style: italic;">
+                        The Facilitator has not officially unveiled the grand revelation yet. Stay tuned for the award ceremony and final announcement!
+                    </p>
+                `;
+            }
+        }
+
+        /* ==========================================================================
+           10. FACILITATOR DASHBOARD & CSV EXPORT
+           ========================================================================== */
+        function adminLogin() {
+            const user = document.getElementById('admin-user').value.trim();
+            const pass = document.getElementById('admin-pass').value.trim();
+
+            if (user === 'admin' && pass === 'blackwood1888') {
+                state.adminLoggedIn = true;
+                playSound('correct');
+                showScreen('screen-admin-dashboard');
+            } else {
+                playSound('wrong');
+                alert("Invalid Facilitator credentials! (Default: admin / blackwood1888)");
+            }
+        }
+
+        function switchAdminTab(tab) {
+            playSound('click');
+            document.getElementById('admin-tab-teams').style.display = tab === 'teams' ? 'block' : 'none';
+            document.getElementById('admin-tab-clues').style.display = tab === 'clues' ? 'block' : 'none';
+            document.getElementById('admin-tab-config').style.display = tab === 'config' ? 'block' : 'none';
+
+            document.getElementById('tab-btn-teams').className = tab === 'teams' ? 'btn-small btn-gold' : 'btn-small btn-secondary';
+            document.getElementById('tab-btn-clues').className = tab === 'clues' ? 'btn-small btn-gold' : 'btn-small btn-secondary';
+            document.getElementById('tab-btn-config').className = tab === 'config' ? 'btn-small btn-gold' : 'btn-small btn-secondary';
+        }
+
+        function renderAdminTeamList() {
+            const tbody = document.getElementById('admin-team-list');
+            if (!tbody) return;
+            const teams = getStoredTeams();
+
+            document.getElementById('admin-team-count').textContent = teams.length;
+
+            if (teams.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="color: #666;">No detective squads registered yet.</td></tr>`;
+                document.getElementById('admin-avg-clues').textContent = '0 / 7';
+                document.getElementById('admin-top-score').textContent = '0';
+                return;
+            }
+
+            let totalClues = 0;
+            let topScore = 0;
+
+            tbody.innerHTML = '';
+            teams.forEach(t => {
+                totalClues += t.unlockedClues.length - 1;
+                if (t.score > topScore) topScore = t.score;
+
+                const tr = document.createElement('tr');
+                const isDq = t.status === 'Disqualified';
+                tr.innerHTML = `
+                    <td><strong>${t.name}</strong></td>
+                    <td style="font-size: 0.8rem; color: #888; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${t.members}</td>
+                    <td><span class="clue-type-badge">${Math.min(7, t.unlockedClues.length)}/7</span></td>
+                    <td><strong style="color: var(--accent-gold);">${t.score}</strong></td>
+                    <td><span style="color: ${isDq ? '#ff4d4d' : '#88ff88'};">${t.status}</span></td>
+                    <td>
+                        <button class="btn-small btn-secondary" onclick="adminAdjustTeamScore('${t.id}', 5)">+5</button>
+                        <button class="btn-small btn-secondary" onclick="adminAdjustTeamScore('${t.id}', -5)">-5</button>
+                        <button class="btn-small btn-danger" onclick="openDisqualifyModal('${t.id}', '${t.name}')">DQ</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('admin-avg-clues').textContent = `${(totalClues / teams.length).toFixed(1)} / 7`;
+            document.getElementById('admin-top-score').textContent = topScore;
+        }
+
+        function adminAdjustTeamScore(teamId, delta) {
+            let teams = getStoredTeams();
+            const t = teams.find(item => item.id === teamId);
+            if (t) {
+                t.score = Math.max(0, t.score + delta);
+                saveTeams(teams);
+                if (state.activeTeam && state.activeTeam.id === teamId) {
+                    state.activeTeam.score = t.score;
+                    updateHud();
+                }
+                renderAdminTeamList();
+            }
+        }
+
+        let pendingDqTeamId = null;
+        function openDisqualifyModal(teamId, name) {
+            pendingDqTeamId = teamId;
+            document.getElementById('dq-team-name-label').textContent = name;
+            document.getElementById('modal-disqualify').classList.add('active');
+        }
+
+        function confirmDisqualification() {
+            const reason = document.getElementById('dq-reason-input').value.trim();
+            if (!reason) return alert("Please specify the official reason for disqualification.");
+
+            let teams = getStoredTeams();
+            const t = teams.find(item => item.id === pendingDqTeamId);
+            if (t) {
+                t.status = 'Disqualified';
+                t.disqualificationReason = reason;
+                saveTeams(teams);
+                if (state.activeTeam && state.activeTeam.id === pendingDqTeamId) {
+                    state.activeTeam.status = 'Disqualified';
+                    alert(`Your squad has been disqualified by the Facilitator. Reason: ${reason}`);
+                    showScreen('screen-welcome');
+                }
+                closeModal('modal-disqualify');
+                renderAdminTeamList();
+            }
+        }
+
+        function adminToggleFinalReveal() {
+            state.revealedTruth = !state.revealedTruth;
+            localStorage.setItem('bw_truth_revealed', state.revealedTruth);
+            const btn = document.getElementById('admin-reveal-btn');
+            if (state.revealedTruth) {
+                btn.textContent = '🔒 Hide Final Reveal';
+                btn.className = 'btn-small btn-gold';
+                alert("The murderer's identity has been broadcasted to all results screens!");
+            } else {
+                btn.textContent = '📢 Reveal Final Murderer';
+                btn.className = 'btn-small btn-danger';
+            }
+            renderFinalRevealState();
+        }
+
+        function adminSeedDemoTeams() {
+            let teams = getStoredTeams();
+            const demo1 = {
+                id: 'team_demo_1',
+                name: 'Shadow Sleuths',
+                members: '1. Alex Hayes\n2. Maya Lin\n3. Jordan Lee\n4. Sam Rivera',
+                currentClueIndex: 4,
+                score: 88,
+                attempts: 5,
+                hintsUsed: 1,
+                unlockedClues: [0, 1, 2, 3, 4],
+                answersSubmitted: { 0: 'partner', 1: 'audit', 2: 'cufflink', 3: 'poison' },
+                evidencePhotos: {},
+                finalSubmission: null,
+                status: 'Active',
+                disqualificationReason: '',
+                registeredAt: new Date(Date.now() - 3600000).toISOString()
+            };
+            const demo2 = {
+                id: 'team_demo_2',
+                name: 'The Raven Watchers',
+                members: '1. Elena Rostova\n2. Liam O\'Connor\n3. Chloe Bennett\n4. Tariq Mansour',
+                currentClueIndex: 6,
+                score: 95,
+                attempts: 7,
+                hintsUsed: 0,
+                unlockedClues: [0, 1, 2, 3, 4, 5, 6],
+                answersSubmitted: { 0: 'partner', 1: 'audit', 2: 'cufflink', 3: 'poison', 4: 'cyanide', 5: '2045' },
+                evidencePhotos: {},
+                finalSubmission: null,
+                status: 'Active',
+                disqualificationReason: '',
+                registeredAt: new Date(Date.now() - 4200000).toISOString()
+            };
+
+            teams = teams.filter(t => t.id !== 'team_demo_1' && t.id !== 'team_demo_2');
+            teams.push(demo1, demo2);
+            saveTeams(teams);
+            renderAdminTeamList();
+            showBanner("Added 2 sample teams for testing.", "success");
+        }
+
+        /* Clue & Answer Customizer */
+        function renderClueEditor() {
+            const list = document.getElementById('admin-clue-editor-list');
+            if (!list) return;
+            list.innerHTML = '';
+
+            state.clues.forEach((c, idx) => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.style.background = '#151515';
+                div.innerHTML = `
+                    <h4 style="text-align: left; margin: 0 0 10px 0;">Stage ${idx + 1}: ${c.room}</h4>
+                    <label>Location & Title</label>
+                    <input type="text" id="edit-room-${idx}" value="${c.room}">
+                    
+                    <label>Detective Challenge Question</label>
+                    <input type="text" id="edit-q-${idx}" value="${c.question}">
+                    
+                    <label>Accepted Answers (comma separated)</label>
+                    <input type="text" id="edit-ans-${idx}" value="${c.acceptedAnswers.join(', ')}">
+
+                    <label>Hint Text</label>
+                    <input type="text" id="edit-hint-${idx}" value="${c.hint}">
+                `;
+                list.appendChild(div);
+            });
+
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'btn btn-gold';
+            saveBtn.textContent = 'Save All Clue Changes';
+            saveBtn.onclick = saveClueEdits;
+            list.appendChild(saveBtn);
+        }
+
+        function saveClueEdits() {
+            state.clues.forEach((c, idx) => {
+                c.room = document.getElementById(`edit-room-${idx}`).value.trim();
+                c.question = document.getElementById(`edit-q-${idx}`).value.trim();
+                const ansRaw = document.getElementById(`edit-ans-${idx}`).value;
+                c.acceptedAnswers = ansRaw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean);
+                c.hint = document.getElementById(`edit-hint-${idx}`).value.trim();
+            });
+
+            localStorage.setItem('bw_clues', JSON.stringify(state.clues));
+            playSound('correct');
+            alert("All clues and answer keys have been updated successfully!");
+        }
+
+        function resetCluesToDefault() {
+            if (confirm("Reset all 7 clues and riddles to factory defaults?")) {
+                state.clues = DEFAULT_CLUES;
+                localStorage.removeItem('bw_clues');
+                renderClueEditor();
+                playSound('correct');
+                alert("Clues restored to default.");
+            }
+        }
+
+        function saveGameConfig() {
+            const code = document.getElementById('cfg-access-code').value.trim();
+            const dur = document.getElementById('cfg-duration').value;
+            const pWrong = document.getElementById('cfg-penalty-wrong').value;
+            const pHint = document.getElementById('cfg-penalty-hint').value;
+
+            localStorage.setItem('bw_access_code', code);
+            localStorage.setItem('bw_timer_duration', parseInt(dur, 10) * 60);
+            localStorage.setItem('bw_penalty_wrong', pWrong);
+            localStorage.setItem('bw_penalty_hint', pHint);
+
+            state.timerSeconds = parseInt(dur, 10) * 60;
+            updateTimerDisplays();
+            playSound('correct');
+            alert("Game parameters saved successfully.");
+        }
+
+        /* CSV Export */
+        function exportResultsCSV() {
+            const teams = getStoredTeams();
+            if (teams.length === 0) return alert("No teams registered to export.");
+
+            let csv = "Team ID,Team Name,Squad Members,Status,Final Score,Clues Unlocked,Attempts,Hints,Accused Suspect,Correct Accusation,Registered At\n";
+            teams.forEach(t => {
+                const membersClean = `"${(t.members || '').replace(/"/g, '""').replace(/\n/g, '; ')}"`;
+                const suspect = t.finalSubmission ? t.finalSubmission.suspect : "None";
+                const isCorrect = t.finalSubmission ? (t.finalSubmission.isCorrect ? "YES" : "NO") : "N/A";
+
+                csv += `"${t.id}","${t.name}",${membersClean},"${t.status}",${t.score},${t.unlockedClues.length - 1},${t.attempts},${t.hintsUsed},"${suspect}","${isCorrect}","${t.registeredAt}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `The_Last_Secret_Results_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
