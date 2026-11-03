@@ -3,6 +3,10 @@
   "rewrites": [
     {
       "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/main",
       "destination": "/main.html"
     }
   ]

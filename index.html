@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>THE LAST SECRET | Haunted Mansion Murder Mystery</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --accent-burgundy: #4a0404;
+            --accent-gold: #c5a059;
+            --text-parchment: #e0d7c6;
+            --panel-bg: rgba(20, 20, 20, 0.95);
+            --border-style: 2px solid var(--accent-gold);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+            background-color: var(--bg-dark);
+            color: var(--text-parchment);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100dvh;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation / Header */
+        header {
+            border-bottom: var(--border-style);
+            padding: 1rem;
+            background: linear-gradient(to bottom, #1a1a1a, #0a0a0a);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards and Sections */
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid #333;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-burgundy);
+            color: var(--text-parchment);
+            border: 1px solid var(--accent-gold);
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            margin: 10px 0;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #630606;
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .btn-secondary {
+            background-color: #222;
+        }
+
+        /* Form Inputs */
+        input[type="text"], input[type="password"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: var(--text-parchment);
+            font-size: 1rem;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        /* Game UI Components */
+        .timer-bar {
+            background: #000;
+            color: #ff3333;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #333;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: #1a1a1a;
+            padding: 10px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+
+        .clue-image {
+            width: 100%;
+            height: 200px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 1px dashed var(--accent-gold);
+            object-fit: cover;
+        }
+
+        .progress-stepper {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .step.complete { background: var(--accent-burgundy); }
+        .step.active { border: 2px solid var(--accent-gold); }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.5rem; }
+        }
+
+        /* Utilities */
+        .overflow-x-auto { overflow-x: auto; width: 100%; }
+        .text-center { text-align: center; }
+        .accent-text { color: var(--accent-gold); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>THE LAST SECRET</h1>
+    </header>
+
+    <div class="container">
+        
+        <!-- Welcome / Selection Screen -->
+        <section id="screen-welcome" class="screen active">
+            <div class="card">
+                <h2>Blackwood Mansion</h2>
+                <p>A tragedy occurred 20 years ago. The truth is still buried in these halls. Are you ready to uncover the secret?</p>
+                <button class="btn" onclick="showScreen('screen-student-reg')">Join Investigation</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-admin-login')">Facilitator Access</button>
+            </div>
+        </section>
+
+        <!-- Admin Login -->
+        <section id="screen-admin-login" class="screen">
+            <div class="card">
+                <h2>Admin Login</h2>
+                <input type="text" placeholder="Username" id="admin-user">
+                <input type="password" placeholder="Passcode" id="admin-pass">
+                <button class="btn" onclick="adminLogin()">Login</button>
+                <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">Back</button>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard -->
+        <section id="screen-admin-dashboard" class="screen">
+            <h2>Facilitator Control</h2>
+            <div class="stats-grid">
+                <div class="stat-box">Teams: <span id="admin-team-count">4</span></div>
+                <div class="stat-box">Time: <span id="admin-timer">45:00</span></div>
+            </div>
+            <div class="card">
+                <h3>Active Teams</h3>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                            <tr><th>Team</th><th>Progress</th><th>Score</th><th>Action</th></tr>
+                        </thead>
+                        <tbody id="team-list">
+                            <tr><td>Shadow Squad</td><td>4/7</td><td>45</td><td><button>Hint</button></td></tr>
+                            <tr><td>The Sleuths</td><td>2/7</td><td>20</td><td><button>Hint</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">Logout</button>
+        </section>
+
+        <!-- Student Registration -->
+        <section id="screen-student-reg" class="screen">
+            <div class="card">
+                <h2>Detective Registration</h2>
+                <input type="text" id="team-name" placeholder="Team Name (e.g. Night Owls)">
+                <textarea id="team-members" placeholder="Team Member Names (4-5 names)" rows="3"></textarea>
+                <input type="text" id="access-code" placeholder="Enter Access Code">
+                <button class="btn" onclick="registerTeam()">Begin Investigation</button>
+            </div>
+        </section>
+
+        <!-- Rules & Briefing -->
+        <section id="screen-rules" class="screen">
+            <div class="card">
+                <h2>Mission Briefing</h2>
+                <p><strong>Case:</strong> The Murder of Edward Blackwood</p>
+                <p><strong>Objective:</strong> Find 7 clues, identify the murderer, motive, and timeline.</p>
+                <h3>Official Rules</h3>
+                <ul>
+                    <li>Follow the sequence of locations.</li>
+                    <li>No sharing clues between teams.</li>
+                    <li>Hints cost -3 points.</li>
+                    <li>Do not destroy physical evidence props.</li>
+                </ul>
+                <button class="btn" onclick="startInvestigation()">I Accept - Start Timer</button>
+            </div>
+        </section>
+
+        <!-- Main Game Screen -->
+        <section id="screen-game" class="screen">
+            <div class="timer-bar" id="game-timer">60:00</div>
+            
+            <div class="progress-stepper">
+                <div class="step complete">1</div>
+                <div class="step active">2</div>
+                <div class="step">3</div>
+                <div class="step">4</div>
+                <div class="step">5</div>
+                <div class="step">6</div>
+                <div class="step">7</div>
+            </div>
+
+            <div class="card">
+                <h2 id="location-name">The Library</h2>
+                <div class="clue-image">
+                    [Torn Diary Page Image]
+                </div>
+                <p id="clue-text">A page has been ripped from Edward's personal journal. It mentions a "heated argument regarding the merger" at 8:00 PM.</p>
+                
+                <div class="card" style="background: #000; margin-top: 15px;">
+                    <p><strong>Challenge:</strong> Who was Edward meeting at 8:00 PM?</p>
+                    <input type="text" id="clue-answer" placeholder="Your Answer...">
+                    <button class="btn" onclick="submitClue()">Submit Clue</button>
+                    <button class="btn btn-secondary" style="font-size: 0.8rem;" onclick="requestHint()">Request Hint (-3 pts)</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">Score: <span id="current-score">10</span></div>
+                <div class="stat-box">Attempts: <span id="current-attempts">0</span></div>
+            </div>
+        </section>
+
+        <!-- Final Submission -->
+        <section id="screen-final" class="screen">
+            <div class="card">
+                <h2>Final Case Report</h2>
+                <label>Primary Suspect:</label>
+                <input type="text" id="final-suspect" placeholder="Who killed Edward?">
+                
+                <label>Motive:</label>
+                <textarea id="final-motive" placeholder="Why did they do it?"></textarea>
+                
+                <label>Evidence Summary:</label>
+                <textarea id="final-evidence" placeholder="Which clues prove this?"></textarea>
+
+                <button class="btn" onclick="submitCase()">Submit Final Investigation</button>
+            </div>
+        </section>
+
+        <!-- Result Screen -->
+        <section id="screen-results" class="screen text-center">
+            <div class="card">
+                <h2 class="accent-text">Investigation Complete</h2>
+                <p>Your report has been submitted to the Lead Inspector.</p>
+                <div style="font-size: 3rem; margin: 20px 0;">85/100</div>
+                <p>Wait for the Facilitator to reveal the truth.</p>
+                <button class="btn btn-secondary" onclick="location.reload()">Return Home</button>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Simple Screen Management Logic
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Mock Navigation Logic
+        function adminLogin() {
+            // In real app, validate against backend
+            showScreen('screen-admin-dashboard');
+        }
+
+        function registerTeam() {
+            const name = document.getElementById('team-name').value;
+            if(!name) return alert("Please enter a team name.");
+            showScreen('screen-rules');
+        }
+
+        function startInvestigation() {
+            showScreen('screen-game');
+            startTimer(3600);
+        }
+
+        let timeLeft = 3600;
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                const display = document.getElementById('game-timer');
+                if(display) display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    timer = 0;
+                    // Handle game over logic here
+                }
+            }, 1000);
+        }
+
+        function submitClue() {
+            // Mocking clue progression
+            alert("Correct! Clue 3 Unlocked.");
+            // In a real app, this would fetch the next clue from the DB
+        }
+
+        function requestHint() {
+            const confirmed = confirm("This will deduct 3 points. Continue?");
+            if(confirmed) {
+                alert("Hint: Check the business partner's initials.");
+            }
+        }
+
+        function submitCase() {
+            showScreen('screen-results');
+        }
+
+        // Initialize
+        console.log("Blackwood Mansion Investigation Loaded.");
+    </script>
+</body>
+</html>
